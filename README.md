@@ -6,11 +6,12 @@ This is a SUPER SIMPLE controller to start and stop a fan based on temperature t
 DO NOT PLUG THE FAN DIRECTLY INTO THE GPIO PIN!!!! Fans draw a lot more current than can be provided by a 
 GPIO pin.
 
-Instead, use a relay or transistor to control the fan. The GPIO turns on the relay or transistor and that in
+Instead, use a relay or NPN transistor to control the fan. The GPIO turns on the relay or transistor and that in
 turn turns on the fan.
 
-If you are using a transistor, make certain that the transistor is rated to pass enough current for the fan.
-
+If you are using an NPN transistor, make certain that the transistor is rated to pass enough current for the fan.
+Most 5V fans use between 100 and 300 mA, and the 2N2222 NPN transistor can handle up to 200mA and 
+the S8050mNPN transistor can handle up to 700mA.
 
 Save runfan.py on your pi somewhere such as /home/pi/bin/runfan.
 
@@ -20,15 +21,12 @@ chmod a+x /home/pi/fan/runfan
 ```
 
 Then execute it using 
-
 ```
 runfan delay ontemp offtemp gpiopin
 ```
-
 where you fill in appropriate values. For example, to check the temperature every 15 seconds, 
-turn the fan on at 65°C, turn it back off at 55°C, and use GPIO 23 (physical pin 12) to control it, 
-you would run it using:
-
+turn the fan on at 65°C, turn it back off at 55°C, and use GPIO 23 (physical pin 16) to control it, 
+you would execute `runfan` using:
 ```
 runfan 15 65 55 23
 ```
@@ -36,8 +34,7 @@ runfan 15 65 55 23
 This will display a message each time `runfan` checks the temperature telling you what the current state is.
 
 If you want this to run at boot, add a line to the end of `/etc/rc.local` (before any exit lines) that looks 
-like one of these lines:
-
+similar to one of these lines:
 ```
 # Run the fan, saving the messages to /tmp/runfan.log
 runfan 15 65 55 23 > /tmp/runfan.log &
