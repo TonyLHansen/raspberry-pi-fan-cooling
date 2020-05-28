@@ -166,7 +166,7 @@ Then add a line towards the end of /etc/rc.local to execute runfan every time th
 Make certain that this comes BEFORE any “exit” statements at the end of that file.
 
 ```shell
-/home/pi/bin/runfan --delay 15 --on-threshold 65 --off-threshold 55 --gpio 23 > /tmp/runfan.out &
+/home/pi/bin/runfan --delay 15 --on-threshold 65 --off-threshold 55 --gpio 23 --verbose > /tmp/runfan.out &
 ```
 
 Adjust the arguments depending on your needs, and particularly which GPIO number you are using, 
@@ -175,7 +175,7 @@ This captures a running trace of the time, temperature and fan state in the file
 If you do not wish to capture that information, change the invocation line to read:
 
 ```shell
-/home/pi/bin/runfan 15 65 55 23 > /dev/null &
+/home/pi/bin/runfan --delay 15 --on-threshold 65 --off-threshold 55 --gpio 23 > /dev/null &
 ```
 
 ## In Closing
