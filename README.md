@@ -166,7 +166,7 @@ Then add a line towards the end of /etc/rc.local to execute runfan every time th
 Make certain that this comes BEFORE any “exit” statements at the end of that file.
 
 ```shell
-/home/pi/bin/runfan 15 65 55 23 > /tmp/runfan.out &
+/home/pi/bin/runfan --delay 15 --on-threshold 65 --off-threshold 55 --gpio 23 > /tmp/runfan.out &
 ```
 
 Adjust the arguments depending on your needs, and particularly which GPIO number you are using, 

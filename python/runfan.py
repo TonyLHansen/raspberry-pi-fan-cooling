@@ -1,40 +1,50 @@
 #!/usr/bin/env python3
+
+"""
+Manage a fan on based on threshold temperatures.
+"""
+
 # See LICENSE file for sharing purposes
 # Copyright 2019 Tony Hansen
 
-import gpiozero,time,psutil,sys
+import gpiozero, time, psutil, sys, argparse
 
-if len(sys.argv) != 5:
-    sys.exit("Usage: {} delay ontemp offtemp gpiopin".format(sys.argv[0]))
+def main():
+    """ main program execution """
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--off-threshold', "-o", type=float, default=55.0, help='Temperature threshold in degrees C to enable fan')
+    parser.add_argument('--on-threshold', "-O", type=float, default=65.0, help='Temperature threshold in degrees C to disable fan')
+    parser.add_argument('--delay', "-d", type=float, default=5.0, help='Delay, in seconds, between temperature readings')
+    parser.add_argument('--gpio', "-g", type=int, default=23, help='GPIO BCM number')
+    parser.add_argument('--verbose', "-v", action='store_true', default=False, help='Output temp and fan status messages')
 
-delay = int(sys.argv[1])
-ontemp = float(sys.argv[2])
-offtemp = float(sys.argv[3])
-gpiopin = int(sys.argv[4])
+    args = parser.parse_args()
 
-if ontemp < offtemp:
-    sys.exit("ontemp ({}) must be greater than offtemp ({})".format(ontemp, offtemp))
+    if args.on_threshold < args.off_threshold:
+        sys.exit("--on-threshold ({}) must be greater than --off-threshold ({})".format(args.on_threshold, args.off_threshold))
 
-on = False
-fan = gpiozero.OutputDevice(gpiopin)
+    try:
+        on = False
+        fan = gpiozero.OutputDevice(args.gpio)
+        while True:
+            # get CPU temperature. Some systems spell it 'cpu-thermal' and others 'cpu_thermal'
+            pt = psutil.sensors_temperatures()
+            t = pt['cpu-thermal'][0].current if 'cpu-thermal' in pt \
+                else pt['cpu_thermal'][0].current if 'cpu_thermal' in pt \
+                     else -9999
+            if t == -9999:
+                print("Cannot determine the CPU temperature", file=sys.stderr)
+            print("{}: {} {}".format(time.ctime(), t, on))
+            # if past either boundary, turn it on or off
+            if not on and t >= args.on_threshold:
+                fan.on()
+                on = True
+            elif on and t <= args.off_threshold:
+                fan.off()
+                on = False
+            time.sleep(args.delay)
+    except KeyboardInterrupt:
+        pass
 
-try:
-    while True:
-        # get CPU temperature. Some systems spell it 'cpu-thermal' and others 'cpu_thermal'
-        pt = psutil.sensors_temperatures()
-        t = pt['cpu-thermal'][0].current if 'cpu-thermal' in pt \
-            else pt['cpu_thermal'][0].current if 'cpu_thermal' in pt \
-                 else -9999
-        if t == -9999:
-            print("Cannot determine the CPU temperature", file=sys.stderr)
-        print("{}: {} {}".format(time.ctime(), t, on))
-        # if past either boundary, turn it on or off
-        if not on and t >= ontemp:
-            fan.on()
-            on = True
-        elif on and t <= offtemp:
-            fan.off()
-            on = False
-        time.sleep(delay)
-except KeyboardInterrupt:
-    pass
+if __name__ == "__main__":
+    main()
