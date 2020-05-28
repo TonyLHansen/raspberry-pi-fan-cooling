@@ -14,24 +14,6 @@ after the temperature reaches about 80°C (175°F).
 
 If you want your Raspberry Pi to continue running at its maximum speed for longer periods of time, you need to cool the CPU down.
 
-## You'll Need
-
-*	Small cooling Fan
-(For example, https://www.amazon.com/gp/product/B00EL938E6/)
-*	S8050 Transistor 
-(For example, https://www.amazon.com/S8050-Silicon-Transistor-Voltage-Current/dp/B015E4DJ90/)
-
-## Pictures
-### A side-blowing fan attached to a case cover, controlled by a transistor. 
-![side-blowing fan attached to a case cover, controlled by a transistor](pictures/raspicooling-fan-on-case.jpg)
-
-### Wires are connected to 5V (pin 4), Ground (pin 6), and GPIO 23 (pin 16).
-### Note the notch on the side for the fan to blow out.
-
-
-### Closeup of transistor (S8050) attached to fan using hot glue. Fan red to red connector. Fan black to emitter. Fan base to 1k resistor to yellow/brown wire. Fan collector to black connector. 
-![transistor closeup](pictures/raspicooling-transistor-closeup.jpg)
-
 ## CPU Cooling Methods
  
 The name of the game for cooling is conducting the heat away from the parts that get hot. 
@@ -129,6 +111,22 @@ Connect its emitter to the fan’s black wire and its collector to ground,
 then connect the base to a 1k resistor that in turn connects to the GPIO pin of your choice. 
 Connect the fan’s red wire to the 5V pin on the Raspberry Pi. 
 You can then control the fan based on whatever criteria you choose.
+
+## You'll Need
+
+*	Small cooling Fan
+(For example, https://www.amazon.com/gp/product/B00EL938E6/)
+*	S8050 Transistor 
+(For example, https://www.amazon.com/S8050-Silicon-Transistor-Voltage-Current/dp/B015E4DJ90/)
+
+### A side-blowing fan attached to a case cover, controlled by a transistor. 
+![side-blowing fan attached to a case cover, controlled by a transistor](pictures/raspicooling-fan-on-case.jpg)
+
+### Wires are connected to 5V (pin 4), Ground (pin 6), and GPIO 23 (pin 16).
+### Note the notch on the side for the fan to blow out.
+
+### Closeup of transistor (S8050) attached to fan using hot glue. Fan red to red connector. Fan black to emitter. Fan base to 1k resistor to yellow/brown wire. Fan collector to black connector. 
+![transistor closeup](pictures/raspicooling-transistor-closeup.jpg)
 
 ## A Simple Reactive Fan Controlling Python Script
 If you want your fan to react to the CPU temperature, you need to decide on the criteria for when it should start and stop. 
