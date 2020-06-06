@@ -119,13 +119,13 @@ You can then control the fan based on whatever criteria you choose.
 *	S8050 Transistor 
 (For example, https://www.amazon.com/S8050-Silicon-Transistor-Voltage-Current/dp/B015E4DJ90/)
 
-### A side-blowing fan attached to a case cover, controlled by a transistor. 
+### A side-blowing fan attached to a case cover, controlled by a transistor. Wires are connected to 5V (pin 4), Ground (pin 6), and GPIO 23 (pin 16). Note the notch on the side for the fan to blow out.
 ![side-blowing fan attached to a case cover, controlled by a transistor](pictures/raspicooling-fan-on-case.jpg)
 
-### Wires are connected to 5V (pin 4), Ground (pin 6), and GPIO 23 (pin 16).
-### Note the notch on the side for the fan to blow out.
+### Fritzing Diagram Showing Connections
+![Fritzing Diagram Showing Connections](pictures/raspicooling-fritzing-labeled.png)
 
-### Closeup of transistor (S8050) attached to fan using hot glue. Fan red to red connector. Fan black to emitter. Fan base to 1k resistor to yellow/brown wire. Fan collector to black connector. 
+### Closeup of transistor (S8050) attached to fan using hot glue. Fan red to red connector to 5V. Fan black to transistor emitter. Transistor base to 1k resistor to yellow/brown wire. Transistor collector to black connector to ground.
 ![transistor closeup](pictures/raspicooling-transistor-closeup.jpg)
 
 ## A Simple Reactive Fan Controlling Python Script
