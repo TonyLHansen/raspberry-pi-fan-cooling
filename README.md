@@ -123,7 +123,7 @@ You can then control the fan based on whatever criteria you choose.
 ![side-blowing fan attached to a case cover, controlled by a transistor](pictures/raspicooling-fan-on-case.jpg)
 
 ### Fritzing Diagram Showing Connections
-![Fritzing Diagram Showing Connections](pictures/raspicooling-fritzing.png)
+![Fritzing Diagram Showing Connections](pictures/raspicooling-fritzing-labeled.png)
 
 ### Closeup of transistor (S8050) attached to fan using hot glue. Fan red to red connector. Fan black to emitter. Fan base to 1k resistor to yellow/brown wire. Fan collector to black connector. 
 ![transistor closeup](pictures/raspicooling-transistor-closeup.jpg)
